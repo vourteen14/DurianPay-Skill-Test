@@ -43,17 +43,17 @@ jobs:
           docker push $DOCKER_IMAGE:production
           docker push $DOCKER_IMAGE:$TAG_NAME
 
-      - name: Set up SSH key
+      - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Test SSH connection
-        if: github.event_name == 'push'
+      - name: Deploy to EC2 Instance
+        if: github.event_name == 'release'
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.SSH_HOST }} << 'EOF'
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            sudo docker pull vourteen14/durianpay:develop
+            sudo docker pull vourteen14/durianpay:production
             sudo docker rm -f durianpay || true
-            sudo docker run -d --name durianpay -p 80:8080 vourteen14/durianpay:develop
+            sudo docker run -d --name durianpay -p 80:8080 vourteen14/durianpay:production
           EOF
