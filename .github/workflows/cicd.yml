@@ -49,6 +49,6 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Test SSH connection
-        if: github.event_name == 'release'
+        if: github.event_name == 'push'
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.SSH_HOST }} "echo 'SSH connection successful!'"
