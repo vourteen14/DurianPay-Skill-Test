@@ -51,4 +51,9 @@ jobs:
       - name: Test SSH connection
         if: github.event_name == 'push'
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.SSH_HOST }} "echo 'SSH connection successful!'"
+          ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.SSH_HOST }} << 'EOF'
+            sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            sudo docker pull vourteen14/durianpay:develop
+            sudo docker rm -f durianpay || true
+            sudo docker run -d --name durianpay -p 80:8080 vourteen14/durianpay:develop
+          EOF
