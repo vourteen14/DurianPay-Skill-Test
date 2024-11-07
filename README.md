@@ -17,8 +17,11 @@ aws s3api create-bucket --bucket durianpay-bucket-angga-suriana --region us-east
 
 ## Run terraform
 cd terraform
+
 terraform init
+
 terraform plan
+
 terraform apply -auto-approve
 
 # Problem #2
