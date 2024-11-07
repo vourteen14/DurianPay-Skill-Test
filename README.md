@@ -26,10 +26,11 @@ terraform apply -auto-approve
 - On the VM, install docker, make sure the docker is running, and make sure http port is open
 - Generate ssh key
   - ssh-keygen -t rsa -b 4096 -C "angga@durianpay.com"
+- Based on generate key result, copy the geneated public key and paste the public key to ec2-user authorized_keys file
 - Set repository variable
   - DOCKER_PASSWORD = docker token with write access
   - DOCKER_USERNAME = docker username
   - SSH_HOST        = public ip of vm that created before
   - SSH_PRIVATE_KEY = private key value that generated before
-- Create push for automatically build and push container to dockerhub with development tag
-- Create release and tag for automatically build, push, and deploy to ec2 vm that created before
+- Create push for automatically build and push container to dockerhub with development tag, i use github action for make the automation
+- Create release and tag for automatically build, push, and deploy to ec2 vm that created before, i use github action for make the automation
